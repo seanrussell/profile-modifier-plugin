@@ -1,0 +1,11 @@
+{
+  "addCommandDescription": "add an apex class or classes to profile",
+  "deleteCommandDescription": "remove an apex class or classes from profile",
+  "editCommandDescription": "edit an apex class in profile",
+  "nameFlagDescription": "name of class",
+  "renameFlagDescription": "name of class to rename to",
+  "profileNameFlagDescription": "profile list to change",
+  "enabledFlagDescription": "class is enabled or not",
+  "filePathDescription": "file path to location of profiles (force-app/main/default/profiles is the default)",
+  "usernameDescription": "username or alias to use for deployment"
+}

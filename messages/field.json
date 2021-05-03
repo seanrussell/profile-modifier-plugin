@@ -1,0 +1,11 @@
+{
+  "addCommandDescription": "add a field or fields to profile",
+  "deleteCommandDescription": "remove a field or fields from profile",
+  "editCommandDescription": "edit a field in profile",
+  "nameFlagDescription": "add a field to profile",
+  "renameFlagDescription": "name of field to rename to",
+  "profileNameFlagDescription": "profile list to add field",
+  "permissionsFlagDescription": "permissions enabled for field",
+  "filePathDescription": "file path to location of profiles (force-app/main/default/profiles is the default)",
+  "usernameDescription": "username or alias to use for deployment"
+}

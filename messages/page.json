@@ -1,0 +1,11 @@
+{
+  "addCommandDescription": "add a visualforce page or pages to profile",
+  "deleteCommandDescription": "remove a visualforce page or pages from profile",
+  "editCommandDescription": "edit a visualforce page in profile",
+  "nameFlagDescription": "name of visualforce page",
+  "renameFlagDescription": "name of page to rename to",
+  "profileNameFlagDescription": "profile list to add visualforce page",
+  "enabledFlagDescription": "page is enabled or not",
+  "filePathDescription": "file path to location of profiles (force-app/main/default/profiles is the default)",
+  "usernameDescription": "username or alias to use for deployment"
+}
