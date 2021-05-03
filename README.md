@@ -1,4 +1,4 @@
-# profile-additions
+# SFDX profile-additions plugin
 
 A plugin for Salesforce DX CLI that provides ability to add Apex Classes, Visualforce Pages, Objects, and Fields to profiles. The motivation for the development of this plugin came from project work requiring these four (4) pieces of metadata needing to be added to, removed from, and edited in multiple profiles within a project space. Manually editing the profile metadata to accomplish this was error prone and time consuming to say the least. Naturally, this plugin could be expanded to accommodate other types of metadata.
 
