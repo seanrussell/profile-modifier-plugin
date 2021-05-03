@@ -172,7 +172,7 @@ USAGE
 OPTIONS
   -n, --name=classname                  (required) the name of the field you want to edit. Only one field name is allowed.
 
-  -r --rename=renameclassname           the name of the field you want to rename the field specified in --name to
+  -r --rename=renamefieldname           the name of the field you want to rename the field specified in --name to
 
   -p, --profile=profilename             the name of the profile you want to edit the field in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be edited in all profiles in either the default location or the location provided by in the --filepath option.
 
@@ -190,3 +190,87 @@ EXAMPLES
 ```
 
 _See code: [src/commands/profile/field/edit.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/field/edit.ts)_
+
+## `sfdx profile:object:add`
+
+Adds object to profiles.
+
+```
+USAGE
+  $ sfdx profile:object:add
+
+OPTIONS
+  -n, --name=objectname                  (required) the name of the object you want to add.
+
+  -p, --profile=profilename             the name of the profile you want to add the object to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be added to all profiles in either the default location or the location provided by in the --filepath option.
+
+  -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The object must already exist in the Salesforce org prior to deploying the profile or the command will fail.
+
+
+EXAMPLES
+    $ sfdx profile:object:add --name MyObject --profile "Admin" --permissions credmv
+    $ sfdx profile:object:add --name MyObject --permissions credmv
+    $ sfdx profile:object:add --name MyObject --profile "Admin" --permissions credmv --username <test@test.com> // Adds MyObject to Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/object/add.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/object/add.ts)_
+
+## `sfdx profile:object:delete`
+
+Removes object from profiles.
+
+```
+USAGE
+  $ sfdx profile:object:delete
+
+OPTIONS
+  -n, --name=objectname                  (required) the name of the object you want to remove.
+
+  -p, --profile=profilename             the name of the profile you want to remove the object from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The command does actually remove the object from the Salesforce org.
+
+
+EXAMPLES
+    $ sfdx profile:object:delete --name MyObject --profile "Admin" --enabled
+    $ sfdx profile:object:delete --name MyObject // Removes MyObject from all profiles
+    $ sfdx profile:object:delete --name MyObject --profile "Admin" --enabled --username <test@test.com> // Removes MyObject from Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/object/delete.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/object/delete.ts)_
+
+## `sfdx profile:object:edit`
+
+Edits a object in profiles.
+
+```
+USAGE
+  $ sfdx profile:object:edit
+
+OPTIONS
+  -n, --name=objectname                  (required) the name of the object you want to edit. Only one object name is allowed.
+
+  -r --rename=renameobjectname           the name of the object you want to rename the object specified in --name to
+
+  -p, --profile=profilename             the name of the profile you want to edit the object in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+
+  -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The command does actually remove the object from the Salesforce org.
+
+
+EXAMPLES
+    $ sfdx profile:object:edit --name MyObject --rename MyObject --profile "Admin" --permissions credmv',
+    $ sfdx profile:object:edit --name MyObject --rename MyObject --permissions credmv // Edits MyObject in all profiles
+    $ sfdx profile:object:edit --name MyObject --rename MyObject --profile "Admin" --permissions credmv --username <test@test.com> // Edits MyObject in Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/object/edit.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/object/edit.ts)_
