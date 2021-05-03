@@ -1,6 +1,6 @@
 # profile-additions
 
-A plugin for Salesforce DX CLI that provides ability to add Apex Classes, Visualforce Pages, Objects, and Fields to profiles.
+A plugin for Salesforce DX CLI that provides ability to add Apex Classes, Visualforce Pages, Objects, and Fields to profiles. The motivation for the development of this plugin came from project work requiring these four (4) pieces of metadata needing to be added to, removed from, and edited in multiple profiles within a project space. Manually editing the profile metadata to accomplish this was error prone and time consuming to say the least. Naturally, this plugin could be expanded to accommodate other types of metadata.
 
 ## Setup
 
@@ -60,7 +60,7 @@ USAGE
   $ sfdx profile:class:delete
 
 OPTIONS
-  -n, --name=classname                  (required) the name of the Apex Class you want to add.
+  -n, --name=classname                  (required) the name of the Apex Class you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the class from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be removed from all profiles in either the default location or the location provided by in the --filepath option.
 
@@ -200,7 +200,7 @@ USAGE
   $ sfdx profile:object:add
 
 OPTIONS
-  -n, --name=objectname                  (required) the name of the object you want to add.
+  -n, --name=objectname                 (required) the name of the object you want to add.
 
   -p, --profile=profilename             the name of the profile you want to add the object to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be added to all profiles in either the default location or the location provided by in the --filepath option.
 
@@ -228,7 +228,7 @@ USAGE
   $ sfdx profile:object:delete
 
 OPTIONS
-  -n, --name=objectname                  (required) the name of the object you want to remove.
+  -n, --name=objectname                 (required) the name of the object you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the object from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be removed from all profiles in either the default location or the location provided by in the --filepath option.
 
@@ -254,9 +254,9 @@ USAGE
   $ sfdx profile:object:edit
 
 OPTIONS
-  -n, --name=objectname                  (required) the name of the object you want to edit. Only one object name is allowed.
+  -n, --name=objectname                 (required) the name of the object you want to edit. Only one object name is allowed.
 
-  -r --rename=renameobjectname           the name of the object you want to rename the object specified in --name to
+  -r --rename=renameobjectname          the name of the object you want to rename the object specified in --name to
 
   -p, --profile=profilename             the name of the profile you want to edit the object in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be edited in all profiles in either the default location or the location provided by in the --filepath option.
 
@@ -274,3 +274,87 @@ EXAMPLES
 ```
 
 _See code: [src/commands/profile/object/edit.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/object/edit.ts)_
+
+## `sfdx profile:page:add`
+
+Adds Visualforce Page to profiles.
+
+```
+USAGE
+  $ sfdx profile:page:add
+
+OPTIONS
+  -n, --name=pagename                   (required) the name of the Visualforce Page you want to add.
+
+  -p, --profile=profilename             the name of the profile you want to add the page to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be added to all profiles in either the default location or the location provided by in the --filepath option.
+
+  -e, --enabled                         [default: false] Enable Visualforce Page
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The Visualforce Page must already exist in the Salesforce org prior to deploying the profile or the command will fail.
+
+
+EXAMPLES
+    $ sfdx profile:page:add --name MyPage --profile "Admin" --enabled
+    $ sfdx profile:page:add --name MyPage --enabled // Adds MyPage to all profiles
+    $ sfdx profile:page:add --name MyPage --profile "Admin" --enabled --username <test@test.com> // Adds MyPage to Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/page/add.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/page/add.ts)_
+
+## `sfdx profile:page:delete`
+
+Removes Visualforce Page from profiles.
+
+```
+USAGE
+  $ sfdx profile:page:delete
+
+OPTIONS
+  -n, --name=pagename                   (required) the name of the Visualforce Page you want to remove.
+
+  -p, --profile=profilename             the name of the profile you want to remove the page from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The command does actually remove the page from the Salesforce org.
+
+
+EXAMPLES
+    $ sfdx profile:page:delete --name MyPage --profile "Admin" --enabled
+    $ sfdx profile:page:delete --name MyPage // Removes MyPage from all profiles
+    $ sfdx profile:page:delete --name MyPage --profile "Admin" --enabled --username <test@test.com> // Removes MyPage from Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/page/delete.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/page/delete.ts)_
+
+## `sfdx profile:page:edit`
+
+Edits a Visualforce Page in profiles.
+
+```
+USAGE
+  $ sfdx profile:page:edit
+
+OPTIONS
+  -n, --name=pagename                   (required) the name of the Visualforce Page you want to edit. Only one Visualforce Page name is allowed.
+
+  -r --rename=renamepagename            the name of the Visualforce Page you want to rename the page specified in --name to
+
+  -p, --profile=profilename             the name of the profile you want to edit the page in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+
+  -e, --enabled                         [default: false] Enable Visualforce Page
+
+  -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
+
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to. Note: The command does actually remove the page from the Salesforce org.
+
+
+EXAMPLES
+    $ sfdx profile:page:edit --name MyPage --rename YourPage --profile "Admin" --enabled',
+    $ sfdx profile:page:edit --name MyPage --rename YourPage --enabled // Edits MyPage in all profiles
+    $ sfdx profile:page:edit --name MyPage --rename YourPage --profile "Admin" --enabled --username <test@test.com> // Edits MyPage in Admin profile and deploys profile to org with username test@test.com
+```
+
+_See code: [src/commands/profile/page/edit.ts](https://github.com/seanrussell/profile-plugin/blob/main/src/commands/profile/page/edit.ts)_
