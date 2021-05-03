@@ -1,18 +1,24 @@
-# Salesforce DX Project: Next Steps
+# profile-additions
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+A plugin for Salesforce DX CLI that provides ability to add Apex Classes, Visualforce Pages, Objects, and Fields to profiles.
 
-## How Do You Plan to Deploy Your Changes?
+## Setup
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+### **Install as plugin (Recommended approach for Installing)**
 
-## Configure Your Salesforce DX Project
+Install plugin using command : `sfdx plugins:install profile-additions`
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+### **Commands**
 
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+- [`sfdx profile:add:class`](#sfdx-addclass)
+- [`sfdx profile:delete:class`](#sfdx-deleteclass)
+- [`sfdx profile:edit:class`](#sfdx-editclass)
+- [`sfdx profile:add:field`](#sfdx-addfield)
+- [`sfdx profile:delete:field`](#sfdx-deletefield)
+- [`sfdx profile:edit:field`](#sfdx-editfield)
+- [`sfdx profile:add:object`](#sfdx-addobject)
+- [`sfdx profile:delete:object`](#sfdx-deleteobject)
+- [`sfdx profile:edit:object`](#sfdx-editobject)
+- [`sfdx profile:add:page`](#sfdx-addpage)
+- [`sfdx profile:delete:page`](#sfdx-deletepage)
+- [`sfdx profile:edit:page`](#sfdx-editpage)
