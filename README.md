@@ -32,9 +32,9 @@ USAGE
   $ sfdx profile:add:class
 
 OPTIONS
-  -n, --name=classname                   (required) the name of the Apex Class you want to add.
+  -n, --name=classname                  (required) the name of the Apex Class you want to add.
 
-  -p, --profile=profilename              the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
 
   -e, --enabled                         [default: false] Enable Apex Class
 
