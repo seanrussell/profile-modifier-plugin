@@ -25,7 +25,7 @@ Install plugin using command : `sfdx plugins:install profile-additions`
 
 ## `sfdx profile:add:class`
 
-Adds Apex class to profiles. This command works for only Non-scratch orgs.
+Adds Apex class to profiles.
 
 ```
 USAGE
@@ -34,13 +34,13 @@ USAGE
 OPTIONS
   -n, --name=classname                   (required) the name of the Apex Class you want to add.
 
-  -p, --profile=profilename                         the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename              the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
 
-  -e, --enabled                                          [default: false] Enable Apex Class
+  -e, --enabled                         [default: false] Enable Apex Class
 
   -f, --filepath=filepath               [default: force-app/main/default/profiles] filepath to the location of the profiles
 
-  -u, --username=username                            the username or alias of the Salesforce org you want to deploy the profiles to
+  -u, --username=username               the username or alias of the Salesforce org you want to deploy the profiles to
 
 
 EXAMPLES
