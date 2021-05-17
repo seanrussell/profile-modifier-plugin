@@ -6,6 +6,7 @@ import { exec, getProfiles, readFiles } from '../../../shared/util';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('profile-modifier-plugin', 'field');
+
 export default class Delete extends SfdxCommand {
 
   public static description = messages.getMessage('deleteCommandDescription');
