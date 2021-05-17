@@ -1,6 +1,6 @@
 # SFDX profile-modifier-plugin
 
-A plugin for Salesforce DX CLI that provides ability to add, edit, and remove Apex Classes, Visualforce Pages, Objects, and Fields from profiles. The motivation for the development of this plugin came from project work requiring these four (4) pieces of metadata frequently needing to be added to, edited in, and removed from multiple profiles within a project space. Manually editing the profile metadata to accomplish this was time consuming, error prone, and a drag to say the least. Naturally, this plugin could be expanded to accommodate other types of profiles metadata such as user permissions, tab visibilities and record type accesses.
+A plugin for Salesforce DX CLI that provides ability to add, edit, and remove Apex Classes, Visualforce Pages, Objects, and Fields from profiles. The motivation for the development of this plugin came from project work requiring these four (4) pieces of metadata frequently needing to be added to, edited in, and removed from multiple profiles within a project space. Manually editing the profile metadata to accomplish this was time consuming, error prone, and a drag to say the least. Naturally, this plugin could be expanded to accommodate other types of profile metadata such as user permissions, tab visibilities and record type accesses.
 
 ## Setup
 
