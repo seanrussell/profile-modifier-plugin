@@ -1,7 +1,8 @@
 {
   "name": "profile-modifier-plugin",
+  "private": true,
   "description": "Add, edit, delete apex classes, visualforce pages, objects, and fields from profile metadata files",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Sean Russell",
   "bugs": "https://github.com/seanrussell/profile-modifier-plugin/issues",
   "dependencies": {
@@ -49,15 +50,15 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "topics": {
-      "hello": {
-        "description": "Commands to say hello."
+      "profile": {
+        "description": "Commands to add, edit and remove apex classes, visualforce pages, objects, and fields from profile metadata files."
       }
     },
     "devPlugins": [
       "@oclif/plugin-help"
     ]
   },
-  "repository": "seanrussell/profile-modifier-plugin",
+  "repository": "https://github.com/seanrussell/profile-modifier-plugin",
   "scripts": {
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",
