@@ -2,7 +2,7 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import { addToProfiles } from '../../../shared/add';
-import { exec, getProfiles, readFiles } from '../../../shared/util';
+import { getProfiles, readFiles } from '../../../shared/util';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('profile-modifier-plugin', 'field');
@@ -29,20 +29,13 @@ export default class Add extends SfdxCommand {
     permissions: flags.string({
       char: 'm',
       description: messages.getMessage('permissionsFlagDescription')
-    }),
-    filepath: flags.boolean({
-      char: 'f',
-      description: messages.getMessage('filePathDescription')
-    }),
-    username: flags.boolean({
-      char: 'u',
-      description: messages.getMessage('usernameDescription')
     })
   };
 
   protected static requiresProject = true;
 
   private sourcePaths: string[];
+  private data: string[];
 
   public async run(): Promise<AnyJson> {
     this.sourcePaths = ((await this.project.resolveProjectConfig())['packageDirectories'] as Array<{ path: string }>).map(d => d.path);
@@ -50,33 +43,21 @@ export default class Add extends SfdxCommand {
     const names = this.flags.name;
     const profiles = this.flags.profile;
     const permissions = this.flags.permissions;
-    const customDirectory = this.flags.filepath;
-    const username = this.flags.username;
 
-    this.ux.startSpinner('Processing');
+    this.ux.startSpinner('Modifying profiles');
 
-    const directory = (customDirectory) ? `${this.project['path']}/${customDirectory}` : `${this.project['path']}/${this.sourcePaths}/main/default/profiles/`;
+    const directories = (Array.isArray(this.sourcePaths)) ? this.sourcePaths.map(sp => `${this.project['path']}/${sp}/main/default/profiles/`) : [`${this.project['path']}/${this.sourcePaths}/main/default/profiles/`];
 
-    let profilesModified;
     if (profiles) {
-      profilesModified = addToProfiles(directory, getProfiles(profiles), names, false, permissions, 'field');
+      this.data = await addToProfiles(directories, getProfiles(profiles, this.project['path']), names, false, permissions, 'field');
     } else {
-      profilesModified = addToProfiles(directory, readFiles(directory), names, false, permissions, 'field');
+      this.data = await addToProfiles(directories, readFiles(directories), names, false, permissions, 'field');
     }
 
-    if (username) {
-      const profileNames = profilesModified.map(profile => {
-        return `Profile:${profile.substr(0, profile.indexOf('.'))}`;
-      });
+    this.ux.stopSpinner('Classes added to profiles successfully');
 
-      const command = `sfdx force:source:deploy -m "${profileNames.join(',')}" -u ${username}`;
-      const result = await exec(command);
-
-      this.ux.log(result.stdout);
-      this.ux.stopSpinner(`Fields added to profiles and pushed to org ${username} successfully.`);
-    } else {
-      this.ux.stopSpinner('Fields added to profiles successfully');
-    }
+    this.ux.styledHeader('Results');
+    this.ux.table(this.data, ['Profile Modified']);
 
     return {};
   }
