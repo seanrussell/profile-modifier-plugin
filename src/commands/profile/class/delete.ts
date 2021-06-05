@@ -2,7 +2,7 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import { removeFromProfiles } from '../../../shared/delete';
-import { getProfiles, readFiles } from '../../../shared/util';
+import { getDataForDisplay, getFileNames } from '../../../shared/util';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('profile-modifier-plugin', 'class');
@@ -31,7 +31,6 @@ export default class Delete extends SfdxCommand {
   protected static requiresProject = true;
 
   private sourcePaths: string[];
-  private data: string[];
 
   public async run(): Promise<AnyJson> {
     this.sourcePaths = ((await this.project.resolveProjectConfig())['packageDirectories'] as Array<{ path: string }>).map(d => d.path);
@@ -39,20 +38,16 @@ export default class Delete extends SfdxCommand {
     const names = this.flags.name;
     const profiles = this.flags.profile;
 
-    this.ux.startSpinner('Modifying profiles');
+    this.ux.startSpinner('Processing');
 
     const directories = (Array.isArray(this.sourcePaths)) ? this.sourcePaths.map(sp => `${this.project['path']}/${sp}/main/default/profiles/`) : [`${this.project['path']}/${this.sourcePaths}/main/default/profiles/`];
 
-    if (profiles) {
-      this.data = await removeFromProfiles(directories, getProfiles(profiles, this.project['path']), names, 'class');
-    } else {
-      this.data = await removeFromProfiles(directories, readFiles(directories), names, 'class');
-    }
+    const filesModified = await removeFromProfiles(getFileNames(directories, profiles, this.project['path']), names, 'class');
 
-    this.ux.stopSpinner('Classes added to profiles successfully');
+    this.ux.stopSpinner('Done');
 
-    this.ux.styledHeader('Results');
-    this.ux.table(this.data, ['Profile Modified']);
+    this.ux.styledHeader('Classes removed from profiles');
+    this.ux.table(getDataForDisplay(filesModified, this.project['path'].length, 'delete', 'class'), ['Action', 'MetadataType', 'ProjectFile']);
 
     return {};
   }

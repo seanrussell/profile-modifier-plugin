@@ -50,8 +50,17 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "topics": {
-      "profile": {
-        "description": "Commands to add, edit and remove apex classes, visualforce pages, objects, and fields from profile metadata files."
+      "profile:class": {
+        "description": "Commands to add, edit and remove apex classes from profile metadata files."
+      },
+      "profile:field": {
+        "description": "Commands to add, edit and remove fields from profile metadata files."
+      },
+      "profile:object": {
+        "description": "Commands to add, edit and remove objects from profile metadata files."
+      },
+      "profile:page": {
+        "description": "Commands to add, edit and remove visualforce pages from profile metadata files."
       }
     },
     "devPlugins": [
