@@ -1,6 +1,5 @@
 {
   "name": "profile-modifier-plugin",
-  "private": true,
   "description": "Add, edit, delete apex classes, visualforce pages, objects, and fields from profile metadata files",
   "version": "1.0.0",
   "author": "Sean Russell",
@@ -11,8 +10,8 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
-    "tslib": "^1",
     "fs-extra": "^9.1.0",
+    "tslib": "^1",
     "xml-formatter": "^2.4.0",
     "xml-js": "^1.6.11",
     "xml2json": "^0.12.0"
@@ -22,15 +21,16 @@
     "@oclif/plugin-help": "^2",
     "@oclif/test": "^1",
     "@salesforce/dev-config": "1.4.1",
-    "@types/chai": "^4",
-    "@types/mocha": "^5",
+    "@types/fs-extra": "^5.0.5",
+    "@types/jest": "^24.0.11",
+    "@types/jsforce": "^1.9.23",
     "@types/node": "^10",
-    "chai": "^4",
-    "globby": "^8",
-    "mocha": "^5",
-    "nyc": "^14",
+    "jest": "^27.0.4",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^27.0.0",
     "ts-node": "^8",
-    "tslint": "^5"
+    "tslint": "^5",
+    "typescript": "^4.2.4"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -69,11 +69,14 @@
   },
   "repository": "https://github.com/seanrussell/profile-modifier-plugin",
   "scripts": {
+    "build": "rimraf lib && tsc",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "tslint -p test -t stylish",
+    "prepare": "yarn run build && oclif-dev manifest && yarn test:clean",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "test:clean": "rimraf testProject*",
+    "test": "yarn run prepare && jest --runInBand",
     "version": "oclif-dev readme && git add README.md"
   }
 }

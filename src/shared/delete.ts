@@ -1,6 +1,5 @@
 import fs = require('fs-extra');
-import * as parser from 'xml2json';
-import { formatMetadata } from './util';
+import { formatMetadata, getParsed } from './util';
 
 const removeFromProfiles = async (fileNames: string[], names: string[], type: string) => {
   const filesModified = [];
@@ -8,8 +7,7 @@ const removeFromProfiles = async (fileNames: string[], names: string[], type: st
     if (fs.existsSync(fileName)) {
       let json = '{}';
 
-      const data = await fs.readFile(fileName, 'utf-8');
-      json = JSON.parse(parser.toJson(data, { reversible: true }));
+      json = await getParsed(await fs.readFile(fileName));
 
       switch (type) {
         case 'class':
@@ -22,7 +20,7 @@ const removeFromProfiles = async (fileNames: string[], names: string[], type: st
               let idx = -1;
               for (let i = 0; i < classes.length; i++) {
                 const cls = classes[i];
-                if (cls.apexClass.$t === name) {
+                if (cls.apexClass === name) {
                   idx = i;
                   break;
                 }
@@ -44,7 +42,7 @@ const removeFromProfiles = async (fileNames: string[], names: string[], type: st
               let idx = -1;
               for (let i = 0; i < fields.length; i++) {
                 const cls = fields[i];
-                if (cls.field.$t === name) {
+                if (cls.field === name) {
                   idx = i;
                   break;
                 }
@@ -66,7 +64,7 @@ const removeFromProfiles = async (fileNames: string[], names: string[], type: st
               let idx = -1;
               for (let i = 0; i < objects.length; i++) {
                 const cls = objects[i];
-                if (cls.object.$t === name) {
+                if (cls.object === name) {
                   idx = i;
                   break;
                 }
@@ -88,7 +86,7 @@ const removeFromProfiles = async (fileNames: string[], names: string[], type: st
               let idx = -1;
               for (let i = 0; i < pages.length; i++) {
                 const cls = pages[i];
-                if (cls.apexPage.$t === name) {
+                if (cls.apexPage === name) {
                   idx = i;
                   break;
                 }

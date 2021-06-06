@@ -1,6 +1,5 @@
 import fs = require('fs-extra');
-import * as parser from 'xml2json';
-import { formatMetadata } from './util';
+import { formatMetadata, getParsed } from './util';
 
 const editInProfiles = async (fileNames: string[], name: string, rename: string, enabled: boolean, permissions: string, type: string) => {
   const filesModified = [];
@@ -8,8 +7,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
     if (fs.existsSync(fileName)) {
       let json = '{}';
 
-      const data = await fs.readFile(fileName, 'utf-8');
-      json = JSON.parse(parser.toJson(data, { reversible: true }));
+      json = await getParsed(await fs.readFile(fileName));
 
       switch (type) {
         case 'class':
@@ -21,7 +19,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           let existingClass;
           if (classes) {
             existingClass = classes.find(cls => {
-              return cls.apexClass.$t === name;
+              return cls.apexClass === name;
             });
           } else {
             classes = [];
@@ -29,9 +27,9 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           }
           if (existingClass) {
             if (rename) {
-              existingClass.apexClass.$t = rename;
+              existingClass.apexClass = rename;
             }
-            existingClass.enabled.$t = enabled;
+            existingClass.enabled = (enabled) ? 'true' : 'false';
           }
           break;
         case 'field':
@@ -43,7 +41,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           let existingField;
           if (fields) {
             existingField = fields.find(cls => {
-              return cls.field.$t === name;
+              return cls.field === name;
             });
           } else {
             fields = [];
@@ -51,10 +49,10 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           }
           if (existingField) {
             if (rename) {
-              existingField.field.$t = rename;
+              existingField.field = rename;
             }
-            existingField.editable.$t = (!permissions || permissions.indexOf('e') !== -1);
-            existingField.readable.$t = (!permissions || permissions.indexOf('r') !== -1);
+            existingField.editable = (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false';
+            existingField.readable = (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false';
           }
           break;
         case 'object':
@@ -66,7 +64,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           let existingObject;
           if (objects) {
             existingObject = objects.find(cls => {
-              return cls.object.$t === name;
+              return cls.object === name;
             });
           } else {
             objects = [];
@@ -74,14 +72,14 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           }
           if (existingObject) {
             if (rename) {
-              existingObject.object.$t = rename;
+              existingObject.object = rename;
             }
-            existingObject.allowRead.$t = (!permissions || permissions.indexOf('r') !== -1);
-            existingObject.allowCreate.$t = (!permissions || permissions.indexOf('c') !== -1);
-            existingObject.allowDelete.$t = (!permissions || permissions.indexOf('d') !== -1);
-            existingObject.allowEdit.$t = (!permissions || permissions.indexOf('e') !== -1);
-            existingObject.modifyAllRecords.$t = (!permissions || permissions.indexOf('m') !== -1);
-            existingObject.viewAllRecords.$t = (!permissions || permissions.indexOf('v') !== -1);
+            existingObject.allowRead = (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false';
+            existingObject.allowCreate = (!permissions || permissions.indexOf('c') !== -1) ? 'true' : 'false';
+            existingObject.allowDelete = (!permissions || permissions.indexOf('d') !== -1) ? 'true' : 'false';
+            existingObject.allowEdit = (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false';
+            existingObject.modifyAllRecords = (!permissions || permissions.indexOf('m') !== -1) ? 'true' : 'false';
+            existingObject.viewAllRecords = (!permissions || permissions.indexOf('v') !== -1) ? 'true' : 'false';
           }
           break;
         case 'page':
@@ -93,7 +91,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           let existingPage;
           if (pages) {
             existingPage = pages.find(cls => {
-              return cls.apexPage.$t === name;
+              return cls.apexPage === name;
             });
           } else {
             pages = [];
@@ -101,9 +99,9 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           }
           if (existingPage) {
             if (rename) {
-              existingPage.apexPage.$t = rename;
+              existingPage.apexPage = rename;
             }
-            existingPage.enabled.$t = enabled;
+            existingPage.enabled = (enabled) ? 'true' : 'false';
           }
           break;
       }

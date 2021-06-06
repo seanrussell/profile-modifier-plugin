@@ -1,0 +1,44 @@
+import { exec } from 'child_process';
+import fs = require('fs-extra');
+import * as util from 'util';
+import * as parser from 'xml2json';
+
+const execProm = util.promisify(exec);
+
+const testProjectName = 'testProjectClass';
+const apexclassName = 'MyClass';
+const profileName = 'Admin';
+const filePath = 'force-app/main/default/profiles/Admin.profile-meta.xml';
+
+describe('profile:class:add', () => {
+  jest.setTimeout(50000);
+
+  beforeAll(async () => {
+    await fs.remove(testProjectName);
+    await exec(`sfdx force:project:create -n ${testProjectName}`);
+    await fs.ensureDir(`${testProjectName}/force-app/main/default/profiles`);
+    await fs.copy('test/helpers/dummy.profile-meta.xml', `${testProjectName}/${filePath}`);
+  });
+
+  test('adds enabled class to profile', async () => {
+    expect(fs.existsSync(testProjectName)).toBe(true);
+
+    await execProm(`sfdx profile:class:add -n ${apexclassName} -p ${profileName}` , { cwd: testProjectName });
+
+    expect(fs.existsSync(`${testProjectName}/${filePath}`)).toBe(true);
+
+    const data = await fs.readFile(filePath, 'utf-8');
+    const json = JSON.parse(parser.toJson(data, { reversible: true }));
+    const classes = [json['Profile']['classAccesses']];
+
+    expect(classes).not.toBeNull();
+
+    const existingClass = classes.find(cls => {
+      return cls.apexClass.$t === apexclassName;
+    });
+
+    expect(existingClass).not.toBeNull();
+    expect(existingClass).toEqual(apexclassName);
+  });
+
+});

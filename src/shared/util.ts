@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import format from 'xml-formatter';
-import * as parser from 'xml2json';
+import * as xml2js from 'xml2js';
 
 const FILE_SUFFIX = '.profile-meta.xml';
 
@@ -52,8 +52,8 @@ const formatMetadata = json => {
       return obj;
   }, {});
 
-  const stringified = JSON.stringify(json);
-  const xml = parser.toXml(stringified);
+  const builder = new xml2js.Builder();
+  const xml = builder.buildObject(json);
 
   const formattedXml = format(xml, {
       indentation: '    ',
@@ -65,8 +65,25 @@ const formatMetadata = json => {
   return formattedXml;
 };
 
+// tslint:disable-next-line: no-any
+const getParsed = async (xmlToParse, explicitArray = false): Promise<any> => {
+  const p = new xml2js.Parser({ explicitArray });
+
+  return new Promise((resolve, reject) => {
+      // tslint:disable-next-line: no-any
+      p.parseString(xmlToParse, (err, json: any) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(json);
+          }
+      });
+  });
+};
+
 export {
   getFileNames,
   getDataForDisplay,
-  formatMetadata
+  formatMetadata,
+  getParsed
 };

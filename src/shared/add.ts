@@ -1,6 +1,5 @@
 import fs = require('fs-extra');
-import * as parser from 'xml2json';
-import { formatMetadata } from './util';
+import { formatMetadata, getParsed } from './util';
 
 const addToProfiles = async (fileNames: string[], names: string[], enabled: boolean, permissions: string, type: string) => {
   const filesModified = [];
@@ -8,8 +7,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
     if (fs.existsSync(fileName)) {
       let json = '{}';
 
-      const data = await fs.readFile(fileName, 'utf-8');
-      json = JSON.parse(parser.toJson(data, { reversible: true }));
+      json = await getParsed(await fs.readFile(fileName));
 
       switch (type) {
         case 'class':
@@ -22,7 +20,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             let existingClass;
             if (classes) {
               existingClass = classes.find(cls => {
-                return cls.apexClass.$t === name;
+                return cls.apexClass === name;
               });
             } else {
               classes = [];
@@ -30,17 +28,13 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             }
             if (!existingClass) {
               const newClass = {
-                apexClass: {
-                  $t: name
-                },
-                enabled: {
-                  $t: (enabled) ? true : false
-                }
+                apexClass: name,
+                enabled: (enabled) ? 'true' : 'false'
               };
               classes.push(newClass);
             }
           }
-          classes.sort((a, b) => (a['apexClass']['$t'] > b['apexClass']['$t']) ? 1 : -1);
+          classes.sort((a, b) => (a['apexClass'] > b['apexClass']) ? 1 : -1);
           break;
         case 'field':
           let fields = json['Profile']['fieldPermissions'];
@@ -52,7 +46,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             let existingField;
             if (fields) {
               existingField = fields.find(cls => {
-                return cls.field.$t === name;
+                return cls.field === name;
               });
             } else {
               fields = [];
@@ -60,20 +54,14 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             }
             if (!existingField) {
               const newField = {
-                editable: {
-                  $t: (!permissions || permissions.indexOf('e') !== -1)
-                },
-                field: {
-                  $t: name
-                },
-                readable: {
-                  $t: (!permissions || permissions.indexOf('r') !== -1)
-                }
+                editable: (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false',
+                field: name,
+                readable: (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false'
               };
               fields.push(newField);
             }
           }
-          fields.sort((a, b) => (a['field']['$t'] > b['field']['$t']) ? 1 : -1);
+          fields.sort((a, b) => (a['field'] > b['field']) ? 1 : -1);
           break;
         case 'object':
           let objects = json['Profile']['objectPermissions'];
@@ -85,7 +73,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             let existingObject;
             if (objects) {
               existingObject = objects.find(cls => {
-                return cls.object.$t === name;
+                return cls.object === name;
               });
             } else {
               objects = [];
@@ -93,32 +81,18 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             }
             if (!existingObject) {
               const newObject = {
-                allowCreate: {
-                  $t: (!permissions || permissions.indexOf('c') !== -1)
-                },
-                allowDelete: {
-                  $t: (!permissions || permissions.indexOf('d') !== -1)
-                },
-                allowEdit: {
-                  $t: (!permissions || permissions.indexOf('e') !== -1)
-                },
-                allowRead: {
-                  $t: (!permissions || permissions.indexOf('r') !== -1)
-                },
-                modifyAllRecords: {
-                  $t: (!permissions || permissions.indexOf('m') !== -1)
-                },
-                object: {
-                  $t: name
-                },
-                viewAllRecords: {
-                  $t: (!permissions || permissions.indexOf('v') !== -1)
-                }
+                allowCreate: (!permissions || permissions.indexOf('c') !== -1) ? 'true' : 'false',
+                allowDelete: (!permissions || permissions.indexOf('d') !== -1) ? 'true' : 'false',
+                allowEdit: (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false',
+                allowRead: (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false',
+                modifyAllRecords: (!permissions || permissions.indexOf('m') !== -1) ? 'true' : 'false',
+                object: name,
+                viewAllRecords: (!permissions || permissions.indexOf('v') !== -1) ? 'true' : 'false'
               };
               objects.push(newObject);
             }
           }
-          objects.sort((a, b) => (a['object']['$t'] > b['object']['$t']) ? 1 : -1);
+          objects.sort((a, b) => (a['object'] > b['object']) ? 1 : -1);
           break;
         case 'page':
           let pages = json['Profile']['pageAccesses'];
@@ -130,7 +104,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             let existingPage;
             if (pages) {
               existingPage = pages.find(cls => {
-                return cls.apexPage.$t === name;
+                return cls.apexPage === name;
               });
             } else {
               pages = [];
@@ -138,17 +112,13 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
             }
             if (!existingPage) {
               const newPage = {
-                apexPage: {
-                  $t: name
-                },
-                enabled: {
-                  $t: (enabled) ? true : false
-                }
+                apexPage: name,
+                enabled: (enabled) ? 'true' : 'false'
               };
               pages.push(newPage);
             }
           }
-          pages.sort((a, b) => (a['apexPage']['$t'] > b['apexPage']['$t']) ? 1 : -1);
+          pages.sort((a, b) => (a['apexPage'] > b['apexPage']) ? 1 : -1);
           break;
       }
 

@@ -4,7 +4,9 @@
     "declaration": true,
     "outDir": "./lib",
     "importHelpers": true,
-    "esModuleInterop" : true
+    "esModuleInterop" : true,
+    "types": ["node", "jest", "fs-extra"],
+    "target": "ES6"
   },
   "include": [
     "./src/**/*"
