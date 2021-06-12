@@ -32,16 +32,16 @@ describe('profile:field:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const fields = json['Profile']['fieldPermissions'];
 
-    expect(fields).not.toBeNull();
+    expect(fields).not.toBeUndefined();
 
-    const existingClass = fields.find(cls => {
+    const existingField = fields.find(cls => {
       return cls.field === apexfieldName;
     });
 
-    expect(existingClass.field).not.toBeNull();
-    expect(existingClass.field).toEqual(apexfieldName);
-    expect(existingClass.readable).toEqual('true');
-    expect(existingClass.editable).toEqual('false');
+    expect(existingField.field).not.toBeNull();
+    expect(existingField.field).toEqual(apexfieldName);
+    expect(existingField.readable).toEqual('true');
+    expect(existingField.editable).toEqual('false');
   });
 
   test('adds read and edit field to profile', async () => {
@@ -56,16 +56,16 @@ describe('profile:field:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const fields = json['Profile']['fieldPermissions'];
 
-    expect(fields).not.toBeNull();
+    expect(fields).not.toBeUndefined();
 
-    const existingClass = fields.find(cls => {
+    const existingField = fields.find(cls => {
       return cls.field === apexfieldName;
     });
 
-    expect(existingClass.field).not.toBeNull();
-    expect(existingClass.field).toEqual(apexfieldName);
-    expect(existingClass.readable).toEqual('true');
-    expect(existingClass.editable).toEqual('true');
+    expect(existingField.field).not.toBeNull();
+    expect(existingField.field).toEqual(apexfieldName);
+    expect(existingField.readable).toEqual('true');
+    expect(existingField.editable).toEqual('true');
   });
 
 });

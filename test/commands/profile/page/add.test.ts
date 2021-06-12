@@ -32,15 +32,15 @@ describe('profile:page:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const pages = json['Profile']['pageAccesses'];
 
-    expect(pages).not.toBeNull();
+    expect(pages).not.toBeUndefined();
 
-    const existingClass = pages.find(cls => {
+    const existingPage = pages.find(cls => {
       return cls.apexPage === apexpageName;
     });
 
-    expect(existingClass.apexPage).not.toBeNull();
-    expect(existingClass.apexPage).toEqual(apexpageName);
-    expect(existingClass.enabled).toEqual('false');
+    expect(existingPage.apexPage).not.toBeNull();
+    expect(existingPage.apexPage).toEqual(apexpageName);
+    expect(existingPage.enabled).toEqual('false');
   });
 
   test('adds enabled page to profile', async () => {
@@ -55,15 +55,15 @@ describe('profile:page:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const pages = json['Profile']['pageAccesses'];
 
-    expect(pages).not.toBeNull();
+    expect(pages).not.toBeUndefined();
 
-    const existingClass = pages.find(cls => {
+    const existingPage = pages.find(cls => {
       return cls.apexPage === apexpageName;
     });
 
-    expect(existingClass.apexPage).not.toBeNull();
-    expect(existingClass.apexPage).toEqual(apexpageName);
-    expect(existingClass.enabled).toEqual('true');
+    expect(existingPage.apexPage).not.toBeNull();
+    expect(existingPage.apexPage).toEqual(apexpageName);
+    expect(existingPage.enabled).toEqual('true');
   });
 
 });

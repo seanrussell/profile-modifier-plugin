@@ -32,20 +32,20 @@ describe('profile:object:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const objects = json['Profile']['objectPermissions'];
 
-    expect(objects).not.toBeNull();
+    expect(objects).not.toBeUndefined();
 
-    const existingClass = objects.find(cls => {
+    const existingObject = objects.find(cls => {
       return cls.object === apexobjectName;
     });
 
-    expect(existingClass.object).not.toBeNull();
-    expect(existingClass.object).toEqual(apexobjectName);
-    expect(existingClass.allowRead).toEqual('true');
-    expect(existingClass.allowEdit).toEqual('false');
-    expect(existingClass.allowCreate).toEqual('false');
-    expect(existingClass.allowDelete).toEqual('false');
-    expect(existingClass.modifyAllRecords).toEqual('false');
-    expect(existingClass.viewAllRecords).toEqual('false');
+    expect(existingObject.object).not.toBeNull();
+    expect(existingObject.object).toEqual(apexobjectName);
+    expect(existingObject.allowRead).toEqual('true');
+    expect(existingObject.allowEdit).toEqual('false');
+    expect(existingObject.allowCreate).toEqual('false');
+    expect(existingObject.allowDelete).toEqual('false');
+    expect(existingObject.modifyAllRecords).toEqual('false');
+    expect(existingObject.viewAllRecords).toEqual('false');
   });
 
   test('adds full access object to profile', async () => {
@@ -60,20 +60,20 @@ describe('profile:object:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const objects = json['Profile']['objectPermissions'];
 
-    expect(objects).not.toBeNull();
+    expect(objects).not.toBeUndefined();
 
-    const existingClass = objects.find(cls => {
+    const existingObject = objects.find(cls => {
       return cls.object === apexobjectName;
     });
 
-    expect(existingClass.object).not.toBeNull();
-    expect(existingClass.object).toEqual(apexobjectName);
-    expect(existingClass.allowRead).toEqual('true');
-    expect(existingClass.allowEdit).toEqual('true');
-    expect(existingClass.allowCreate).toEqual('true');
-    expect(existingClass.allowDelete).toEqual('true');
-    expect(existingClass.modifyAllRecords).toEqual('true');
-    expect(existingClass.viewAllRecords).toEqual('true');
+    expect(existingObject.object).not.toBeNull();
+    expect(existingObject.object).toEqual(apexobjectName);
+    expect(existingObject.allowRead).toEqual('true');
+    expect(existingObject.allowEdit).toEqual('true');
+    expect(existingObject.allowCreate).toEqual('true');
+    expect(existingObject.allowDelete).toEqual('true');
+    expect(existingObject.modifyAllRecords).toEqual('true');
+    expect(existingObject.viewAllRecords).toEqual('true');
   });
 
 });

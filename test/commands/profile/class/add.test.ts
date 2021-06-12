@@ -32,7 +32,7 @@ describe('profile:class:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const classes = json['Profile']['classAccesses'];
 
-    expect(classes).not.toBeNull();
+    expect(classes).not.toBeUndefined();
 
     const existingClass = classes.find(cls => {
       return cls.apexClass === apexclassName;
@@ -55,7 +55,7 @@ describe('profile:class:add', () => {
     const json = await getParsed(await fs.readFile(profilePath));
     const classes = json['Profile']['classAccesses'];
 
-    expect(classes).not.toBeNull();
+    expect(classes).not.toBeUndefined();
 
     const existingClass = classes.find(cls => {
       return cls.apexClass === apexclassName;
