@@ -1,7 +1,7 @@
 {
   "name": "profile-modifier-plugin",
   "description": "Add, edit, delete apex classes, visualforce pages, objects, and fields from profile metadata files",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Sean Russell",
   "bugs": "https://github.com/seanrussell/profile-modifier-plugin/issues",
   "dependencies": {
@@ -71,7 +71,7 @@
     "build": "rimraf lib && tsc",
     "lint": "tslint --project . --config tslint.json --format stylish",
     "postpack": "rm -f oclif.manifest.json",
-    "posttest": "tslint -p test -t stylish",
+    "posttest": "yarn run test:clean",
     "prepare": "yarn run build && oclif-dev manifest && yarn test:clean",
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test:clean": "rimraf testProject*",

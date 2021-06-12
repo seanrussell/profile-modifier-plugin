@@ -5,12 +5,12 @@ import { getParsed } from '../../../../src/shared/util';
 
 const execProm = util.promisify(exec);
 
-const testProjectName = 'testProjectClass';
-const apexclassName = 'MyClass';
+const testProjectName = 'testProjectPage';
+const apexpageName = 'MyPage';
 const profileName = 'Admin';
 const filePath = 'force-app/main/default/profiles/Admin.profile-meta.xml';
 
-describe('profile:class:add', () => {
+describe('profile:page:add', () => {
   jest.setTimeout(50000);
 
   beforeEach(async () => {
@@ -20,49 +20,49 @@ describe('profile:class:add', () => {
     await fs.copy('test/helpers/dummy.profile-meta.xml', `${testProjectName}/${filePath}`);
   });
 
-  test('adds disabled class to profile', async () => {
+  test('adds disabled page to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName}`, { cwd: testProjectName });
+    await execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName}`, { cwd: testProjectName });
 
     const profilePath = `${testProjectName}/${filePath}`;
 
     expect(fs.existsSync(profilePath)).toBe(true);
 
     const json = await getParsed(await fs.readFile(profilePath));
-    const classes = json['Profile']['classAccesses'];
+    const pages = json['Profile']['pageAccesses'];
 
-    expect(classes).not.toBeNull();
+    expect(pages).not.toBeNull();
 
-    const existingClass = classes.find(cls => {
-      return cls.apexClass === apexclassName;
+    const existingClass = pages.find(cls => {
+      return cls.apexPage === apexpageName;
     });
 
-    expect(existingClass.apexClass).not.toBeNull();
-    expect(existingClass.apexClass).toEqual(apexclassName);
+    expect(existingClass.apexPage).not.toBeNull();
+    expect(existingClass.apexPage).toEqual(apexpageName);
     expect(existingClass.enabled).toEqual('false');
   });
 
-  test('adds enabled class to profile', async () => {
+  test('adds enabled page to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName} --enabled`, { cwd: testProjectName });
+    await execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName} --enabled`, { cwd: testProjectName });
 
     const profilePath = `${testProjectName}/${filePath}`;
 
     expect(fs.existsSync(profilePath)).toBe(true);
 
     const json = await getParsed(await fs.readFile(profilePath));
-    const classes = json['Profile']['classAccesses'];
+    const pages = json['Profile']['pageAccesses'];
 
-    expect(classes).not.toBeNull();
+    expect(pages).not.toBeNull();
 
-    const existingClass = classes.find(cls => {
-      return cls.apexClass === apexclassName;
+    const existingClass = pages.find(cls => {
+      return cls.apexPage === apexpageName;
     });
 
-    expect(existingClass.apexClass).not.toBeNull();
-    expect(existingClass.apexClass).toEqual(apexclassName);
+    expect(existingClass.apexPage).not.toBeNull();
+    expect(existingClass.apexPage).toEqual(apexpageName);
     expect(existingClass.enabled).toEqual('true');
   });
 
