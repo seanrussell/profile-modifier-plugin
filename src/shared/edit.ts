@@ -51,8 +51,10 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
             if (rename) {
               existingField.field = rename;
             }
-            existingField.editable = (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false';
-            existingField.readable = (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false';
+            if (permissions) {
+              existingField.editable = (permissions.indexOf('e') !== -1) ? 'true' : 'false';
+              existingField.readable = (permissions.indexOf('r') !== -1) ? 'true' : 'false';
+            }
           }
           break;
         case 'object':
@@ -74,12 +76,14 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
             if (rename) {
               existingObject.object = rename;
             }
-            existingObject.allowRead = (!permissions || permissions.indexOf('r') !== -1) ? 'true' : 'false';
-            existingObject.allowCreate = (!permissions || permissions.indexOf('c') !== -1) ? 'true' : 'false';
-            existingObject.allowDelete = (!permissions || permissions.indexOf('d') !== -1) ? 'true' : 'false';
-            existingObject.allowEdit = (!permissions || permissions.indexOf('e') !== -1) ? 'true' : 'false';
-            existingObject.modifyAllRecords = (!permissions || permissions.indexOf('m') !== -1) ? 'true' : 'false';
-            existingObject.viewAllRecords = (!permissions || permissions.indexOf('v') !== -1) ? 'true' : 'false';
+            if (permissions) {
+              existingObject.allowRead = (permissions.indexOf('r') !== -1) ? 'true' : 'false';
+              existingObject.allowCreate = (permissions.indexOf('c') !== -1) ? 'true' : 'false';
+              existingObject.allowDelete = (permissions.indexOf('d') !== -1) ? 'true' : 'false';
+              existingObject.allowEdit = (permissions.indexOf('e') !== -1) ? 'true' : 'false';
+              existingObject.modifyAllRecords = (permissions.indexOf('m') !== -1) ? 'true' : 'false';
+              existingObject.viewAllRecords = (permissions.indexOf('v') !== -1) ? 'true' : 'false';
+            }
           }
           break;
         case 'page':
