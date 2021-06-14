@@ -52,10 +52,15 @@ const formatMetadata = json => {
       return obj;
   }, {});
 
-  const builder = new xml2js.Builder();
+  const builder = new xml2js.Builder({
+    headless: true
+  });
+
   const xml = builder.buildObject(json);
 
-  const formattedXml = format(xml, {
+  const xmlDoc = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n${xml}`;
+
+  const formattedXml = format(xmlDoc, {
       indentation: '    ',
       filter: node => node.type !== 'Comment',
       collapseContent: true,
