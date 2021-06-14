@@ -13,10 +13,13 @@ const filePath = 'force-app/main/default/profiles/Admin.profile-meta.xml';
 describe('profile:field:delete', () => {
   jest.setTimeout(50000);
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await fs.remove(testProjectName);
     await exec(`sfdx force:project:create -n ${testProjectName}`);
     await fs.ensureDir(`${testProjectName}/force-app/main/default/profiles`);
+  });
+
+  beforeEach(async () => {
     await fs.copy('test/helpers/dummy.profile-meta.xml', `${testProjectName}/${filePath}`);
   });
 

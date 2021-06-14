@@ -13,17 +13,22 @@ const filePath = 'force-app/main/default/profiles/Admin.profile-meta.xml';
 describe('profile:object:add', () => {
   jest.setTimeout(50000);
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await fs.remove(testProjectName);
     await exec(`sfdx force:project:create -n ${testProjectName}`);
     await fs.ensureDir(`${testProjectName}/force-app/main/default/profiles`);
+  });
+
+  beforeEach(async () => {
     await fs.copy('test/helpers/dummy.profile-meta.xml', `${testProjectName}/${filePath}`);
   });
 
   test('adds read only object to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:object:add --name "${apexobjectName}" --profile ${profileName} --permissions r`, { cwd: testProjectName });
+    const cmd = `sfdx profile:object:add --name ${apexobjectName} --profile ${profileName} --permissions r`;
+
+    await execProm(cmd, { cwd: testProjectName });
 
     const profilePath = `${testProjectName}/${filePath}`;
 
@@ -51,7 +56,7 @@ describe('profile:object:add', () => {
   test('adds full access object to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:object:add --name ${apexobjectName} --profile ${profileName} --permissions creadmv`, { cwd: testProjectName });
+    await execProm(`sfdx profile:object:add --name ${apexobjectName} --profile ${profileName} --permissions credmv`, { cwd: testProjectName });
 
     const profilePath = `${testProjectName}/${filePath}`;
 
