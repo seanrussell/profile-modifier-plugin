@@ -1,6 +1,8 @@
 # SFDX profile-modifier-plugin
 
-A plugin for Salesforce DX CLI that provides ability to add, edit, and remove Apex Classes, Visualforce Pages, Objects, and Fields from profiles. The motivation for the development of this plugin came from project work requiring these four (4) pieces of metadata frequently needing to be added to, edited in, and removed from multiple profiles within a project space. Manually editing the profile metadata to accomplish this was time consuming, error prone, and a drag to say the least. Naturally, this plugin could be expanded to accommodate other types of profile metadata such as user permissions, tab visibilities and record type accesses.
+A plugin for Salesforce DX CLI that provides ability to add, edit, and remove Apex Classes, Visualforce Pages, Objects, and Fields from profiles. The motivation for the development of this plugin came from project work frequently requiring these four (4) pieces of metadata to be added to, edited in, and removed from multiple profiles within a project space. Manually editing the profile metadata to accomplish this was time consuming, error prone, and a drag to say the least. 
+
+This plugin could be expanded to accommodate other types of profile metadata such as user permissions, tab visibilities and record type accesses.
 
 ## Setup
 
@@ -37,7 +39,7 @@ OPTIONS
   -p, --profile=profilename             the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
 
   -e, --enabled                         [default: false] Enable Apex Class
-
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:class:add --name MyClass --profile "Admin" --enabled
@@ -58,6 +60,8 @@ OPTIONS
   -n, --name=classname                  (required) the name of the Apex Class you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the class from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:class:delete --name MyClass --profile "Admin" --enabled
@@ -82,6 +86,7 @@ OPTIONS
   -p, --profile=profilename             the name of the profile you want to edit the class in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be edited in all profiles in either the default location or the location provided by in the --filepath option.
 
   -e, --enabled                         [default: false] Enable Apex Class
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:class:edit --name MyClass --rename YourClass --profile "Admin" --enabled',
@@ -105,6 +110,8 @@ OPTIONS
 
   -m, --permissions                     the permissions to assign the field: 'e' for editable and 'r' for readable
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+
 EXAMPLES
     $ sfdx profile:field:add --name MyField --profile "Admin" --permissions re'
     $ sfdx profile:field:add --name MyField --permissions re // Adds MyField to all profiles with both editable and readable set to true
@@ -124,6 +131,8 @@ OPTIONS
   -n, --name=fieldname                  (required) the name of the field you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the field from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:field:delete --name MyObject.MyField --profile "Admin" --enabled
@@ -149,6 +158,8 @@ OPTIONS
 
   -m, --permissions                     the permissions to assign the field: 'e' for editable and 'r' for readable
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+
 EXAMPLES
     $ sfdx profile:field:edit --name MyObject.MyField --rename MyObject.YourField --profile "Admin" --permissions re',
     $ sfdx profile:field:edit --name MyObject.MyField --rename MyObject.YourField --permissions re // Edits MyObject.MyField in all profiles
@@ -171,6 +182,8 @@ OPTIONS
 
   -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+
 EXAMPLES
     $ sfdx profile:object:add --name MyObject --profile "Admin" --permissions credmv
     $ sfdx profile:object:add --name MyObject --permissions credmv
@@ -190,6 +203,8 @@ OPTIONS
   -n, --name=objectname                 (required) the name of the object you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the object from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:object:delete --name MyObject --profile "Admin" --enabled
@@ -215,6 +230,8 @@ OPTIONS
 
   -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+
 EXAMPLES
     $ sfdx profile:object:edit --name MyObject --rename MyObject --profile "Admin" --permissions credmv',
     $ sfdx profile:object:edit --name MyObject --rename MyObject --permissions credmv // Edits MyObject in all profiles
@@ -237,6 +254,8 @@ OPTIONS
 
   -e, --enabled                         [default: false] Enable Visualforce Page
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+
 EXAMPLES
     $ sfdx profile:page:add --name MyPage --profile "Admin" --enabled
     $ sfdx profile:page:add --name MyPage --enabled // Adds MyPage to all profiles
@@ -256,6 +275,8 @@ OPTIONS
   -n, --name=pagename                   (required) the name of the Visualforce Page you want to remove.
 
   -p, --profile=profilename             the name of the profile you want to remove the page from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
 EXAMPLES
     $ sfdx profile:page:delete --name MyPage --profile "Admin" --enabled
@@ -281,6 +302,8 @@ OPTIONS
 
   -e, --enabled                         [default: false] Enable Visualforce Page
 
+  -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+  
 EXAMPLES
     $ sfdx profile:page:edit --name MyPage --rename YourPage --profile "Admin" --enabled',
     $ sfdx profile:page:edit --name MyPage --rename YourPage --enabled // Edits MyPage in all profiles
