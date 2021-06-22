@@ -29,6 +29,10 @@ export default class Add extends SfdxCommand {
     permissions: flags.string({
       char: 'm',
       description: messages.getMessage('permissionsFlagDescription')
+    }),
+    alphabetize: flags.boolean({
+      char: 'a',
+      description: messages.getMessage('alphabetizeFlagDescription')
     })
   };
 
@@ -42,12 +46,13 @@ export default class Add extends SfdxCommand {
     const names = this.flags.name;
     const profiles = this.flags.profile;
     const permissions = this.flags.permissions;
+    const alphabetize = this.flags.alphabetize;
 
     this.ux.startSpinner('Processing');
 
     const directories = (Array.isArray(this.sourcePaths)) ? this.sourcePaths.map(sp => `${this.project['path']}/${sp}/main/default/profiles/`) : [`${this.project['path']}/${this.sourcePaths}/main/default/profiles/`];
 
-    const filesModified = await addToProfiles(getFileNames(directories, profiles, this.project['path']), names, false, permissions, 'object');
+    const filesModified = await addToProfiles(getFileNames(directories, profiles, this.project['path']), names, false, permissions, 'object', alphabetize);
 
     this.ux.stopSpinner('Done');
 

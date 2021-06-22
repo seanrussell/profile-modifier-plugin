@@ -29,6 +29,10 @@ export default class Delete extends SfdxCommand {
     profile: flags.array({
       char: 'p',
       description: messages.getMessage('profileNameFlagDescription')
+    }),
+    alphabetize: flags.boolean({
+      char: 'a',
+      description: messages.getMessage('alphabetizeFlagDescription')
     })
   };
 
@@ -41,12 +45,13 @@ export default class Delete extends SfdxCommand {
 
     const names = this.flags.name;
     const profiles = this.flags.profile;
+    const alphabetize = this.flags.alphabetize;
 
     this.ux.startSpinner('Processing');
 
     const directories = (Array.isArray(this.sourcePaths)) ? this.sourcePaths.map(sp => `${this.project['path']}/${sp}/main/default/profiles/`) : [`${this.project['path']}/${this.sourcePaths}/main/default/profiles/`];
 
-    const filesModified = await removeFromProfiles(getFileNames(directories, profiles, this.project['path']), names, 'page');
+    const filesModified = await removeFromProfiles(getFileNames(directories, profiles, this.project['path']), names, 'page', alphabetize);
 
     this.ux.stopSpinner('Done');
 

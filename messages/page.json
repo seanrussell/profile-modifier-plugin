@@ -6,6 +6,7 @@
   "renameFlagDescription": "name of page to rename to",
   "profileNameFlagDescription": "profile list to add visualforce page",
   "enabledFlagDescription": "page is enabled or not",
+  "alphabetizeFlagDescription": "profile metadata elements are alphabetized",
   "filePathDescription": "file path to location of profiles (force-app/main/default/profiles is the default)",
   "usernameDescription": "username or alias to use for deployment"
 }

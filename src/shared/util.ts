@@ -46,11 +46,13 @@ const getDataForDisplay = (filesModified, startPos, action, metadata) => {
   });
 };
 
-const formatMetadata = json => {
-  json['Profile'] = Object.keys(json['Profile']).sort().reduce((obj, key) => {
-      obj[key] = json['Profile'][key];
-      return obj;
-  }, {});
+const formatMetadata = (json, alphabetize) => {
+  if (alphabetize) {
+    json['Profile'] = Object.keys(json['Profile']).sort().reduce((obj, key) => {
+        obj[key] = json['Profile'][key];
+        return obj;
+    }, {});
+  }
 
   const builder = new xml2js.Builder({
     headless: true

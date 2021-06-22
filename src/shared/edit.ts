@@ -1,7 +1,7 @@
 import fs = require('fs-extra');
 import { formatMetadata, getParsed } from './util';
 
-const editInProfiles = async (fileNames: string[], name: string, rename: string, enabled: boolean, permissions: string, type: string) => {
+const editInProfiles = async (fileNames: string[], name: string, rename: string, enabled: boolean, permissions: string, type: string, alphabetize: boolean) => {
   const filesModified = [];
   for (const fileName of fileNames) {
     if (fs.existsSync(fileName)) {
@@ -110,7 +110,7 @@ const editInProfiles = async (fileNames: string[], name: string, rename: string,
           break;
       }
 
-      await fs.writeFile(fileName, formatMetadata(json), 'utf-8');
+      await fs.writeFile(fileName, formatMetadata(json, alphabetize), 'utf-8');
 
       filesModified.push(fileName);
     }

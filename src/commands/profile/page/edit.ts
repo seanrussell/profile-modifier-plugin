@@ -33,6 +33,10 @@ export default class Edit extends SfdxCommand {
     enabled: flags.boolean({
       char: 'e',
       description: messages.getMessage('enabledFlagDescription')
+    }),
+    alphabetize: flags.boolean({
+      char: 'a',
+      description: messages.getMessage('alphabetizeFlagDescription')
     })
   };
 
@@ -47,12 +51,13 @@ export default class Edit extends SfdxCommand {
     const rename = this.flags.rename;
     const profiles = this.flags.profile;
     const enabled = this.flags.enabled;
+    const alphabetize = this.flags.alphabetize;
 
     this.ux.startSpinner('Modifying profiles');
 
     const directories = (Array.isArray(this.sourcePaths)) ? this.sourcePaths.map(sp => `${this.project['path']}/${sp}/main/default/profiles/`) : [`${this.project['path']}/${this.sourcePaths}/main/default/profiles/`];
 
-    const filesModified = await editInProfiles(getFileNames(directories, profiles, this.project['path']), name, rename, enabled, '', 'page');
+    const filesModified = await editInProfiles(getFileNames(directories, profiles, this.project['path']), name, rename, enabled, '', 'page', alphabetize);
 
     this.ux.stopSpinner('Done');
 
