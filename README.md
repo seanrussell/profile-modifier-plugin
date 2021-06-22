@@ -36,7 +36,7 @@ USAGE
 OPTIONS
   -n, --name=classname                  (required) the name of the Apex Class you want to add.
 
-  -p, --profile=profilename             the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to add the class to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be added to all profiles in the path locations specified in your sfdx-project.json file.
 
   -e, --enabled                         [default: false] Enable Apex Class
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
@@ -59,7 +59,7 @@ USAGE
 OPTIONS
   -n, --name=classname                  (required) the name of the Apex Class you want to remove.
 
-  -p, --profile=profilename             the name of the profile you want to remove the class from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to remove the class from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be removed from all profiles in the path locations specified in your sfdx-project.json file.
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
@@ -83,7 +83,7 @@ OPTIONS
 
   -r --rename=renameclassname           the name of the Apex Class you want to rename the class specified in --name to
 
-  -p, --profile=profilename             the name of the profile you want to edit the class in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to edit the class in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the class will be edited in all profiles in the path locations specified in your sfdx-project.json file.
 
   -e, --enabled                         [default: false] Enable Apex Class
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
@@ -106,7 +106,7 @@ USAGE
 OPTIONS
   -n, --name=fieldname                  (required) the name of the field you want to add. This should be a field name prefixed with the object name and separated by a dot.
 
-  -p, --profile=profilename             the name of the profile you want to add the field to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to add the field to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be added to all profiles in the path locations specified in your sfdx-project.json file.
 
   -m, --permissions                     the permissions to assign the field: 'e' for editable and 'r' for readable
 
@@ -130,7 +130,7 @@ USAGE
 OPTIONS
   -n, --name=fieldname                  (required) the name of the field you want to remove.
 
-  -p, --profile=profilename             the name of the profile you want to remove the field from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to remove the field from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be removed from all profiles in the path locations specified in your sfdx-project.json file.
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
@@ -154,7 +154,7 @@ OPTIONS
 
   -r --rename=renamefieldname           the name of the field you want to rename the field specified in --name to
 
-  -p, --profile=profilename             the name of the profile you want to edit the field in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to edit the field in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the field will be edited in all profiles in the path locations specified in your sfdx-project.json file.
 
   -m, --permissions                     the permissions to assign the field: 'e' for editable and 'r' for readable
 
@@ -178,7 +178,7 @@ USAGE
 OPTIONS
   -n, --name=objectname                 (required) the name of the object you want to add.
 
-  -p, --profile=profilename             the name of the profile you want to add the object to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to add the object to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be added to all profiles in the path locations specified in your sfdx-project.json file.
 
   -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
 
@@ -202,7 +202,7 @@ USAGE
 OPTIONS
   -n, --name=objectname                 (required) the name of the object you want to remove.
 
-  -p, --profile=profilename             the name of the profile you want to remove the object from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to remove the object from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be removed from all profiles in the path locations specified in your sfdx-project.json file.
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
@@ -226,7 +226,7 @@ OPTIONS
 
   -r --rename=renameobjectname          the name of the object you want to rename the object specified in --name to
 
-  -p, --profile=profilename             the name of the profile you want to edit the object in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to edit the object in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the object will be edited in all profiles in the path locations specified in your sfdx-project.json file.
 
   -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
 
@@ -250,7 +250,7 @@ USAGE
 OPTIONS
   -n, --name=pagename                   (required) the name of the Visualforce Page you want to add.
 
-  -p, --profile=profilename             the name of the profile you want to add the page to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be added to all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to add the page to. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be added to all profiles in the path locations specified in your sfdx-project.json file.
 
   -e, --enabled                         [default: false] Enable Visualforce Page
 
@@ -274,7 +274,7 @@ USAGE
 OPTIONS
   -n, --name=pagename                   (required) the name of the Visualforce Page you want to remove.
 
-  -p, --profile=profilename             the name of the profile you want to remove the page from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be removed from all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to remove the page from. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be removed from all profiles in the path locations specified in your sfdx-project.json file.
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
 
@@ -298,12 +298,12 @@ OPTIONS
 
   -r --rename=renamepagename            the name of the Visualforce Page you want to rename the page specified in --name to
 
-  -p, --profile=profilename             the name of the profile you want to edit the page in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be edited in all profiles in either the default location or the location provided by in the --filepath option.
+  -p, --profile=profilename             the name of the profile you want to edit the page in. This can be a comma separated list of profile names. Note: if a profile name has a space in the name, the name should be enclosed in quotes. If this flag is not specified, the assumption is that the page will be edited in all profiles in the path locations specified in your sfdx-project.json file.
 
   -e, --enabled                         [default: false] Enable Visualforce Page
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
-  
+
 EXAMPLES
     $ sfdx profile:page:edit --name MyPage --rename YourPage --profile "Admin" --enabled',
     $ sfdx profile:page:edit --name MyPage --rename YourPage --enabled // Edits MyPage in all profiles
