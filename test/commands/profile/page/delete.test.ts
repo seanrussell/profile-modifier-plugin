@@ -26,16 +26,17 @@ fdescribe('profile:page:delete', () => {
   test('removes page from profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:page:delete --name "${apexpageName}" --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:page:delete --name "${apexpageName}" --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+      const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+      expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const pages = json['Profile']['apexPages'];
+      const json = await getParsed(await fs.readFile(profilePath));
+      const pages = json['Profile']['apexPages'];
 
-    expect(pages).toBeUndefined();
+      expect(pages).toBeUndefined();
+    });
   });
-
 });

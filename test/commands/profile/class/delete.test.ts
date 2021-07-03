@@ -26,16 +26,18 @@ describe('profile:class:delete', () => {
   test('removes class from profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:class:delete --name ${apexclassName} --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:class:delete --name ${apexclassName} --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const classes = json['Profile']['classAccesses'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const classes = json['Profile']['classAccesses'];
 
-    expect(classes).toBeUndefined();
+        expect(classes).toBeUndefined();
+    });
   });
 
 });

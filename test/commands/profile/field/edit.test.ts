@@ -27,40 +27,44 @@ describe('profile:field:edit', () => {
   test('renames existing field in profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:field:edit --name "${apexfieldName}" --rename "${apexfieldRename}" --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:field:edit --name "${apexfieldName}" --rename "${apexfieldRename}" --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+      const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+      expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const existingField = json['Profile']['fieldPermissions'];
+      const json = await getParsed(await fs.readFile(profilePath));
+      const existingField = json['Profile']['fieldPermissions'];
 
-    expect(existingField).not.toBeUndefined();
-    expect(existingField.field).not.toBeUndefined();
-    expect(existingField.field).not.toEqual(apexfieldName);
-    expect(existingField.field).toEqual(apexfieldRename);
-    expect(existingField.readable).toEqual('false');
-    expect(existingField.editable).toEqual('false');
+      expect(existingField).not.toBeUndefined();
+      expect(existingField.field).not.toBeUndefined();
+      expect(existingField.field).not.toEqual(apexfieldName);
+      expect(existingField.field).toEqual(apexfieldRename);
+      expect(existingField.readable).toEqual('false');
+      expect(existingField.editable).toEqual('false');
+    });
   });
 
   test('changes existing field permissions in profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:field:edit --name "${apexfieldName}" --profile ${profileName} --permissions re`, { cwd: testProjectName });
+    execProm(`sfdx profile:field:edit --name "${apexfieldName}" --profile ${profileName} --permissions re`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const existingField = json['Profile']['fieldPermissions'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const existingField = json['Profile']['fieldPermissions'];
 
-    expect(existingField).not.toBeUndefined();
-    expect(existingField.field).not.toBeUndefined();
-    expect(existingField.field).toEqual(apexfieldName);
-    expect(existingField.readable).toEqual('true');
-    expect(existingField.editable).toEqual('true');
+        expect(existingField).not.toBeUndefined();
+        expect(existingField.field).not.toBeUndefined();
+        expect(existingField.field).toEqual(apexfieldName);
+        expect(existingField.readable).toEqual('true');
+        expect(existingField.editable).toEqual('true');
+    });
   });
 
 });

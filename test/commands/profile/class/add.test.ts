@@ -26,47 +26,51 @@ describe('profile:class:add', () => {
   test('adds disabled class to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const classes = json['Profile']['classAccesses'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const classes = json['Profile']['classAccesses'];
 
-    expect(classes).not.toBeUndefined();
+        expect(classes).not.toBeUndefined();
 
-    const existingClass = classes.find(cls => {
-      return cls.apexClass === apexclassName;
+        const existingClass = classes.find(cls => {
+          return cls.apexClass === apexclassName;
+        });
+
+        expect(existingClass.apexClass).not.toBeNull();
+        expect(existingClass.apexClass).toEqual(apexclassName);
+        expect(existingClass.enabled).toEqual('false');
     });
-
-    expect(existingClass.apexClass).not.toBeNull();
-    expect(existingClass.apexClass).toEqual(apexclassName);
-    expect(existingClass.enabled).toEqual('false');
   });
 
   test('adds enabled class to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName} --enabled`, { cwd: testProjectName });
+    execProm(`sfdx profile:class:add --name ${apexclassName} --profile ${profileName} --enabled`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const classes = json['Profile']['classAccesses'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const classes = json['Profile']['classAccesses'];
 
-    expect(classes).not.toBeUndefined();
+        expect(classes).not.toBeUndefined();
 
-    const existingClass = classes.find(cls => {
-      return cls.apexClass === apexclassName;
+        const existingClass = classes.find(cls => {
+          return cls.apexClass === apexclassName;
+        });
+
+        expect(existingClass.apexClass).not.toBeNull();
+        expect(existingClass.apexClass).toEqual(apexclassName);
+        expect(existingClass.enabled).toEqual('true');
     });
-
-    expect(existingClass.apexClass).not.toBeNull();
-    expect(existingClass.apexClass).toEqual(apexclassName);
-    expect(existingClass.enabled).toEqual('true');
   });
 
 });

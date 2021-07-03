@@ -76,6 +76,7 @@
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test:clean": "rimraf testProject*",
     "test": "yarn run prepare && jest --runInBand",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "testsingle": "jest"
   }
 }

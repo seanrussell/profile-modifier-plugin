@@ -26,16 +26,18 @@ describe('profile:field:delete', () => {
   test('removes field from profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:field:delete --name "${apexfieldName}" --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:field:delete --name "${apexfieldName}" --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const fields = json['Profile']['fieldPermissions'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const fields = json['Profile']['fieldPermissions'];
 
-    expect(fields).toBeUndefined();
+        expect(fields).toBeUndefined();
+    });
   });
 
 });

@@ -26,47 +26,50 @@ describe('profile:page:add', () => {
   test('adds disabled page to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName}`, { cwd: testProjectName });
+    execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName}`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+        const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+        expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const pages = json['Profile']['pageAccesses'];
+        const json = await getParsed(await fs.readFile(profilePath));
+        const pages = json['Profile']['pageAccesses'];
 
-    expect(pages).not.toBeUndefined();
+        expect(pages).not.toBeUndefined();
 
-    const existingPage = pages.find(cls => {
-      return cls.apexPage === apexpageName;
+        const existingPage = pages.find(cls => {
+          return cls.apexPage === apexpageName;
+        });
+
+        expect(existingPage.apexPage).not.toBeNull();
+        expect(existingPage.apexPage).toEqual(apexpageName);
+        expect(existingPage.enabled).toEqual('false');
     });
-
-    expect(existingPage.apexPage).not.toBeNull();
-    expect(existingPage.apexPage).toEqual(apexpageName);
-    expect(existingPage.enabled).toEqual('false');
   });
 
   test('adds enabled page to profile', async () => {
     expect(fs.existsSync(testProjectName)).toBe(true);
 
-    await execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName} --enabled`, { cwd: testProjectName });
+    execProm(`sfdx profile:page:add --name ${apexpageName} --profile ${profileName} --enabled`, { cwd: testProjectName })
+      .then(async () => {
 
-    const profilePath = `${testProjectName}/${filePath}`;
+      const profilePath = `${testProjectName}/${filePath}`;
 
-    expect(fs.existsSync(profilePath)).toBe(true);
+      expect(fs.existsSync(profilePath)).toBe(true);
 
-    const json = await getParsed(await fs.readFile(profilePath));
-    const pages = json['Profile']['pageAccesses'];
+      const json = await getParsed(await fs.readFile(profilePath));
+      const pages = json['Profile']['pageAccesses'];
 
-    expect(pages).not.toBeUndefined();
+      expect(pages).not.toBeUndefined();
 
-    const existingPage = pages.find(cls => {
-      return cls.apexPage === apexpageName;
+      const existingPage = pages.find(cls => {
+        return cls.apexPage === apexpageName;
+      });
+
+      expect(existingPage.apexPage).not.toBeNull();
+      expect(existingPage.apexPage).toEqual(apexpageName);
+      expect(existingPage.enabled).toEqual('true');
     });
-
-    expect(existingPage.apexPage).not.toBeNull();
-    expect(existingPage.apexPage).toEqual(apexpageName);
-    expect(existingPage.enabled).toEqual('true');
   });
-
 });
