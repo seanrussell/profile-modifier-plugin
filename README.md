@@ -185,6 +185,7 @@ OPTIONS
   -m, --permissions                     the permissions to assign the object: 'c' for creatable, 'r' for readable, 'e' for editable, 'd' for deletable, 'm' for allow modify all, and 'v' for allow view all.
 
   -a, --alphabetize                     [default: false] Alphabetize profile metadata file
+  -f, --addfields                       add object fields in addition to object (will not include required fields or master detail fields with read and edit permissions)
 
 EXAMPLES
     $ sfdx profile:object:add --name MyObject --profile "Admin" --permissions credmv
