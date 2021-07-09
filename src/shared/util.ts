@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import format from 'xml-formatter';
 import * as xml2js from 'xml2js';
@@ -34,6 +34,32 @@ const getFileNames = (directories, profiles, basepath) => {
   } else {
    return readFiles(directories);
   }
+};
+
+const getObjectFieldFileNames = async (directories) => {
+  let fields = [];
+
+  for (const directory of directories) {
+    if (fs.existsSync(directory)) {
+      const parts = directory.split('/');
+      const objName = parts[parts.length - 3];
+      const files = fs.readdirSync(directory);
+      for (const file of files) {
+        const filepath = `${directory}${file}`;
+
+        if (fs.existsSync(filepath)) {
+          const json = await getParsed(await fs.readFile(filepath));
+
+          if (json['CustomField']['type'] !== 'MasterDetail' &&
+             (!json['CustomField']['required'] || json['CustomField']['required'] !== 'true')) {
+            fields.push(`${objName}.${json['CustomField']['fullName']}`);
+          }
+        }
+      }
+    }
+  }
+
+  return fields;
 };
 
 const getDataForDisplay = (filesModified, startPos, action, metadata) => {
@@ -90,6 +116,7 @@ const getParsed = async (xmlToParse, explicitArray = false): Promise<any> => {
 
 export {
   getFileNames,
+  getObjectFieldFileNames,
   getDataForDisplay,
   formatMetadata,
   getParsed

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "./lib",
+    "rootDirs": ["./src", "./test"],
+    "baseUrl": "./",
     "importHelpers": true,
     "esModuleInterop" : true,
     "types": ["node", "jest", "fs-extra"],

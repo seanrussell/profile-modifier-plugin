@@ -19,9 +19,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
           for (const name of names) {
             let existingClass;
             if (classes) {
-              existingClass = classes.find(cls => {
-                return cls.apexClass === name;
-              });
+              existingClass = classes.find(cls => cls.apexClass === name);
             } else {
               classes = [];
               json['Profile']['classAccesses'] = classes;
@@ -45,9 +43,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
           for (const name of names) {
             let existingField;
             if (fields) {
-              existingField = fields.find(cls => {
-                return cls.field === name;
-              });
+              existingField = fields.find(cls => cls.field === name);
             } else {
               fields = [];
               json['Profile']['fieldPermissions'] = fields;
@@ -72,9 +68,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
           for (const name of names) {
             let existingObject;
             if (objects) {
-              existingObject = objects.find(cls => {
-                return cls.object === name;
-              });
+              existingObject = objects.find(cls => cls.object === name);
             } else {
               objects = [];
               json['Profile']['objectPermissions'] = objects;
@@ -103,9 +97,7 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
           for (const name of names) {
             let existingPage;
             if (pages) {
-              existingPage = pages.find(cls => {
-                return cls.apexPage === name;
-              });
+              existingPage = pages.find(cls => cls.apexPage === name);
             } else {
               pages = [];
               json['Profile']['pageAccesses'] = pages;

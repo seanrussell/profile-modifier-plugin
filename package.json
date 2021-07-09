@@ -1,7 +1,7 @@
 {
   "name": "profile-modifier-plugin",
   "description": "Add, edit, delete apex classes, visualforce pages, objects, and fields from profile metadata files",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "Sean Russell",
   "bugs": "https://github.com/seanrussell/profile-modifier-plugin/issues",
   "dependencies": {
@@ -11,7 +11,7 @@
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
     "fs-extra": "^9.1.0",
-    "tslib": "^1",
+    "tslib": "^2",
     "xml-formatter": "^2.4.0",
     "xml-js": "^1.6.11"
   },
@@ -46,7 +46,7 @@
   ],
   "license": "MIT",
   "oclif": {
-    "commands": "./lib/commands",
+    "commands": "./lib/src/commands",
     "bin": "sfdx",
     "topics": {
       "profile:class": {

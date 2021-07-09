@@ -9,6 +9,8 @@ const testProjectName = 'testProjectObject';
 const apexobjectName = 'TestObject__c';
 const profileName = 'Admin';
 const filePath = 'force-app/main/default/profiles/Admin.profile-meta.xml';
+const objectPath = 'force-app/main/default/objects';
+const objectFieldPath = 'force-app/main/default/objects/TestObject__c/fields/TestField__c.field-meta.xml';
 
 describe('profile:object:add', () => {
   jest.setTimeout(50000);
@@ -17,6 +19,8 @@ describe('profile:object:add', () => {
     await fs.remove(testProjectName);
     await exec(`sfdx force:project:create -n ${testProjectName}`);
     await fs.ensureDir(`${testProjectName}/force-app/main/default/profiles`);
+    await fs.ensureDir(`${testProjectName}/force-app/main/default/objects`);
+    await fs.copy(`test/helpers/${apexobjectName}`, `${testProjectName}/${objectPath}`);
   });
 
   beforeEach(async () => {
@@ -81,6 +85,41 @@ describe('profile:object:add', () => {
         expect(existingObject.allowDelete).toEqual('false');
         expect(existingObject.modifyAllRecords).toEqual('false');
         expect(existingObject.viewAllRecords).toEqual('false');
+    });
+  });
+
+  test('adds object with fields to profile', async () => {
+    expect(fs.existsSync(testProjectName)).toBe(true);
+
+    execProm(`sfdx profile:object:add --name ${apexobjectName} --profile ${profileName} --addfields`, { cwd: testProjectName })
+      .then(async () => {
+
+        const profilePath = `${testProjectName}/${filePath}`;
+
+        expect(fs.existsSync(profilePath)).toBe(true);
+
+        const json = await getParsed(await fs.readFile(profilePath));
+        const objects = json['Profile']['objectPermissions'];
+
+        expect(objects).not.toBeUndefined();
+
+        const existingObject = objects.find(cls => {
+          return cls.object === apexobjectName;
+        });
+
+        expect(existingObject.object).not.toBeNull();
+        expect(existingObject.object).toEqual(apexobjectName);
+        expect(existingObject.allowRead).toEqual('true');
+        expect(existingObject.allowEdit).toEqual('false');
+        expect(existingObject.allowCreate).toEqual('false');
+        expect(existingObject.allowDelete).toEqual('false');
+        expect(existingObject.modifyAllRecords).toEqual('false');
+        expect(existingObject.viewAllRecords).toEqual('false');
+
+        const fieldJson = await getParsed(await fs.readFile(objectFieldPath));
+        const fieldFullName = fieldJson['CustomField']['fullName'];
+
+        expect(fieldFullName).toEqual('TestField__c');
     });
   });
 });

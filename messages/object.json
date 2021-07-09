@@ -8,5 +8,6 @@
   "permissionsFlagDescription": "permissions enabled for object or field",
   "filePathDescription": "file path to location of profiles (force-app/main/default/profiles is the default)",
   "usernameDescription": "username or alias to use for deployment",
-  "alphabetizeFlagDescription": "profile metadata elements are alphabetized"
+  "alphabetizeFlagDescription": "profile metadata elements are alphabetized",
+  "addFieldsFlagDescription": "adds all fields on object to profile"
 }
