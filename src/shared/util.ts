@@ -72,7 +72,8 @@ const getDataForDisplay = (filesModified, startPos, action, metadata) => {
   });
 };
 
-const formatMetadata = (json, alphabetize) => {
+const formatMetadata = (json, alphabetize: boolean) => {
+  console.log('ALPHA: ' + alphabetize);
   if (alphabetize) {
     json['Profile'] = Object.keys(json['Profile']).sort().reduce((obj, key) => {
         obj[key] = json['Profile'][key];
