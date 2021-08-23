@@ -32,7 +32,9 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
               classes.push(newClass);
             }
           }
-          classes.sort((a, b) => (a['apexClass'] > b['apexClass']) ? 1 : -1);
+          if (alphabetize) {
+            classes.sort((a, b) => (a['apexClass'] > b['apexClass']) ? 1 : -1);
+          }
           break;
         case 'field':
           let fields = json['Profile']['fieldPermissions'];
@@ -57,7 +59,9 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
               fields.push(newField);
             }
           }
-          fields.sort((a, b) => (a['field'] > b['field']) ? 1 : -1);
+          if (alphabetize) {
+            fields.sort((a, b) => (a['field'] > b['field']) ? 1 : -1);
+          }
           break;
         case 'object':
           let objects = json['Profile']['objectPermissions'];
@@ -86,7 +90,9 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
               objects.push(newObject);
             }
           }
-          objects.sort((a, b) => (a['object'] > b['object']) ? 1 : -1);
+          if (alphabetize) {
+            objects.sort((a, b) => (a['object'] > b['object']) ? 1 : -1);
+          }
           break;
         case 'page':
           let pages = json['Profile']['pageAccesses'];
@@ -110,7 +116,9 @@ const addToProfiles = async (fileNames: string[], names: string[], enabled: bool
               pages.push(newPage);
             }
           }
-          pages.sort((a, b) => (a['apexPage'] > b['apexPage']) ? 1 : -1);
+          if (alphabetize) {
+            pages.sort((a, b) => (a['apexPage'] > b['apexPage']) ? 1 : -1);
+          }
           break;
       }
 

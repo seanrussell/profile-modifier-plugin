@@ -45,7 +45,7 @@ export default class Delete extends SfdxCommand {
 
     const names = this.flags.name;
     const profiles = this.flags.profile;
-    const alphabetize = this.flags.alphabetize;
+    const alphabetize = this.flags.alphabetize || false;
 
     this.ux.startSpinner('Processing');
 

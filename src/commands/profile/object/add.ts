@@ -50,7 +50,7 @@ export default class Add extends SfdxCommand {
     const names = this.flags.name;
     const profiles = this.flags.profile;
     const permissions = this.flags.permissions;
-    const alphabetize = this.flags.alphabetize;
+    const alphabetize = this.flags.alphabetize || false;
     const addfields = this.flags.addfields || false;
 
     this.ux.startSpinner('Processing');

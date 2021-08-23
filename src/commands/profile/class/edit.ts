@@ -49,8 +49,8 @@ export default class Edit extends SfdxCommand {
     const name = this.flags.name;
     const rename = this.flags.rename;
     const profiles = this.flags.profile;
-    const enabled = this.flags.enabled;
-    const alphabetize = this.flags.alphabetize;
+    const enabled = this.flags.enabled || false;
+    const alphabetize = this.flags.alphabetize || false;
 
     this.ux.startSpinner('Processing');
 
